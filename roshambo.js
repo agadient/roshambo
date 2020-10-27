@@ -20,9 +20,9 @@ class ArgParser {
 }
 
 class Logger {
+    static logLevels = {error: 0, game: 1, debug: 2}
     constructor(logLevel=1) {
         this._logLevel = logLevel
-        this._levels = {error: 0, game: 1, debug: 2}
     }
 
     get logLevel() {
@@ -34,19 +34,19 @@ class Logger {
     }
 
     debug(msg) {
-        if (this._levels.debug <= this._logLevel) {
+        if (Logger.logLevels.debug <= this._logLevel) {
             console.log("DEBUG: " + `${msg}`)
         }
     }
 
     game(msg) {
-        if (this._levels.game <= this._logLevel) {
+        if (Logger.logLevels.game <= this._logLevel) {
             console.log(`${msg}`)
         }
     }
 
     error(msg) {
-        if (this._levels.error <= this._logLevel) {
+        if (Logger.logLevels.error <= this._logLevel) {
             console.log("ERROR: " + `${msg}`)
         }
     }
@@ -54,27 +54,28 @@ class Logger {
 }
 
 class Game {
+    static validMoves = ["rock", "paper", "scissors"]
+    static tie = 0
+    static computerWin = 1
+    static playerWin = 2
+    // 0 is tie, 1 is computer win, 2 is payer win
+    // format is playerMoveComputerMove : outcome
+    static gameOutcomes = {
+        paperpaper : Game.tie,
+        paperscissors : Game.computerWin,
+        paperrock : Game.playerWin,
+        scissorspaper : Game.playerWin,
+        scissorsscissors : Game.tie,
+        scissorsrock : Game.computerWin,
+        rockpaper : Game.computerWin,
+        rockscissors : Game.playerWin,
+        rockrock : Game.tie
+    }
     constructor(argv) {
         this._parser = new ArgParser(argv)
-        this._logger = new Logger(1)
-        this._validMoves = ["rock", "paper", "scissors"]
-        this._computerMove = this._validMoves[Math.floor(Math.random() * this._validMoves.length)];
-        this._tie = 0
-        this._computerWin = 1
-        this._playerWin = 2
-        // 0 is tie, 1 is computer win, 2 is payer win
-        // format is playerMoveComputerMove : outcome
-        this._gameOutcomes = {
-            paperpaper : this._tie,
-            paperscissors : this._computerWin,
-            paperrock : this._playerWin,
-            scissorspaper : this._playerWin,
-            scissorsscissors : this._tie,
-            scissorsrock : this._computerWin,
-            rockpaper : this._computerWin,
-            rockscissors : this._playerWin,
-            rockrock : this._tie
-        }
+        this._logger = new Logger(Logger.logLevels.game)
+        this._computerMove = Game.validMoves[Math.floor(Math.random() * Game.validMoves.length)];
+
     }
 
     playGame() {
@@ -82,7 +83,7 @@ class Game {
             this._logger.error("USAGE: roshambo.js --move={rock,paper,scissors}")
             return
         }
-        this._playerMove = this._validMoves.filter(valid_move => valid_move === this._parser.move)
+        this._playerMove = Game.validMoves.filter(valid_move => valid_move === this._parser.move)
         if (this._playerMove.length === 0) {
             this._logger.error("VALID MOVES: rock,paper,scissors")
             return
@@ -108,11 +109,11 @@ class Game {
     }
 
     evalGame() {
-        if (this._gameOutcomes[this._playerMove+this._computerMove] === 0) {
+        if (Game.gameOutcomes[this._playerMove+this._computerMove] === 0) {
             this.tie()
-        } else if (this._gameOutcomes[this._playerMove+this._computerMove] === 1) {
+        } else if (Game.gameOutcomes[this._playerMove+this._computerMove] === 1) {
             this.computerWin()
-        } else if (this._gameOutcomes[this._playerMove+this._computerMove] === 2) {
+        } else if (Game.gameOutcomes[this._playerMove+this._computerMove] === 2) {
             this.playerWin()
         }
     }
