@@ -22,7 +22,7 @@ class ArgParser {
 class Logger {
     constructor(logLevel=1) {
         this._logLevel = logLevel
-        this._levels = {error: 0, game: 1, info: 2}
+        this._levels = {error: 0, game: 1, debug: 2}
     }
 
     get logLevel() {
@@ -34,19 +34,19 @@ class Logger {
     }
 
     debug(msg) {
-        if (2 <= this._logLevel) {
+        if (this._levels.debug <= this._logLevel) {
             console.log("DEBUG: " + `${msg}`)
         }
     }
 
     game(msg) {
-        if (1 <= this._logLevel) {
+        if (this._levels.game <= this._logLevel) {
             console.log(`${msg}`)
         }
     }
 
     error(msg) {
-        if (0 <= this._logLevel) {
+        if (this._levels.error <= this._logLevel) {
             console.log("ERROR: " + `${msg}`)
         }
     }
