@@ -64,18 +64,21 @@ class Game {
         this._logger = new Logger(1)
         this._validMoves = ["rock", "paper", "scissors"]
         this._computerMove = this._validMoves[Math.floor(Math.random() * this._validMoves.length)];
+        this._tie = 0
+        this._computerWin = 1
+        this._playerWin = 2
         // 0 is tie, 1 is computer win, 2 is payer win
         // format is playerMoveComputerMove : outcome
         this._gameOutcomes = {
-            paperpaper : 0,
-            paperscissors : 1,
-            paperrock : 2,
-            scissorspaper :2,
-            scissorsscissors : 0,
-            scissorsrock : 1,
-            rockpaper : 1,
-            rockscissors : 2,
-            rockrock : 0
+            paperpaper : this._tie,
+            paperscissors : this._computerWin,
+            paperrock : this._playerWin,
+            scissorspaper : this._playerWin,
+            scissorsscissors : this._tie,
+            scissorsrock : this._computerWin,
+            rockpaper : this._computerWin,
+            rockscissors : this._playerWin,
+            rockrock : this._tie
         }
     }
 
