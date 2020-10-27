@@ -89,6 +89,7 @@ class Game {
             this._logger.error("VALID MOVES: rock,paper,scissors")
             return
         }
+        this._playerMove = this._playerMove[0]
 
         this.welcomeMessage()
         this.playerMove()
