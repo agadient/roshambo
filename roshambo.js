@@ -2,7 +2,6 @@ const yargs = require('yargs/yargs')
 const { hideBin } = require('yargs/helpers')
 const argv = yargs(hideBin(process.argv)).argv
 
-
 class ArgParser {
     constructor(argv) {
         this._move = argv.move
@@ -19,8 +18,6 @@ class ArgParser {
         return this._move
     }   
 }
-
-
 
 class Logger {
     constructor(logLevel=1) {
@@ -55,8 +52,6 @@ class Logger {
     }
 
 }
-
-
 
 class Game {
     constructor(argv) {
