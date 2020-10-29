@@ -109,11 +109,11 @@ class Game {
     }
 
     evalGame() {
-        if (Game.gameOutcomes[this._playerMove+this._computerMove] === 0) {
+        if (Game.gameOutcomes[this._playerMove+this._computerMove] === Game.tie) {
             this.tie()
-        } else if (Game.gameOutcomes[this._playerMove+this._computerMove] === 1) {
+        } else if (Game.gameOutcomes[this._playerMove+this._computerMove] === Game.computerWin) {
             this.computerWin()
-        } else if (Game.gameOutcomes[this._playerMove+this._computerMove] === 2) {
+        } else if (Game.gameOutcomes[this._playerMove+this._computerMove] === Game.playerWin) {
             this.playerWin()
         }
     }
